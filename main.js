@@ -5,7 +5,7 @@ const permEl = document.getElementById("perm");
 const btn = document.getElementById("enable");
 
 function onOrientation(event) {
-  // alpha: 0..360 (compass-ish / yaw-ish)
+  // alpha: 0..360 (yaw, compass direction)
   // beta:  -180..180 (front-back tilt)
   // gamma:  -90..90 (left-right tilt)
   const a = event.alpha;
