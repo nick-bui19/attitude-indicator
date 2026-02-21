@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Attitude Indicator</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Attitude Indicator (Sensors)</h1>
+
+      <button id="enable">Enable Motion Sensors</button>
+
+      <div class="card">
+        <div>alpha (yaw): <span id="alpha">—</span></div>
+        <div>beta (pitch): <span id="beta">—</span></div>
+        <div>gamma (roll): <span id="gamma">—</span></div>
+        <div>Permission: <span id="perm">unknown</span></div>
+      </div>
+
+      <p class="hint">
+        Tip: iOS requires a tap on the button. Hold the phone in portrait and tilt it.
+      </p>
+    </main>
+
+    <script src="main.js"></script>
+  </body>
+</html>
