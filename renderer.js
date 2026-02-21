@@ -26,6 +26,10 @@ export function pitchToPixels(pitchDeg) {
   return pitchDeg * PITCH_PX_PER_DEG;
 }
 
+export function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
 // --- Renderer ---
 
 export function createRenderer(canvas) {

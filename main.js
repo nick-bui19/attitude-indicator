@@ -1,4 +1,4 @@
-import { createRenderer } from "./renderer.js";
+import { createRenderer, clamp } from "./renderer.js";
 
 // --- DOM elements ---
 const alphaEl = document.getElementById("alpha");
@@ -16,12 +16,12 @@ const wrap = document.querySelector(".canvas-wrap");
 const resizeObs = new ResizeObserver(() => renderer.resize());
 resizeObs.observe(wrap);
 
-// --- Hardcoded test values (will be replaced by sensor data) ---
-const TEST_ROLL = 20;
-const TEST_PITCH = 10;
+// --- Live sensor state (updated by onOrientation, read by draw loop) ---
+let roll = 0;
+let pitch = 0;
 
 function loop() {
-  renderer.draw(TEST_ROLL, TEST_PITCH);
+  renderer.draw(roll, pitch);
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
@@ -34,6 +34,10 @@ function onOrientation(event) {
   const a = event.alpha;
   const b = event.beta;
   const g = event.gamma;
+
+  // Update draw state (keep last good value on null)
+  if (g != null) roll = g;
+  if (b != null) pitch = clamp(b, -45, 45);
 
   alphaEl.textContent = a == null ? "null" : a.toFixed(1);
   betaEl.textContent = b == null ? "null" : b.toFixed(1);
