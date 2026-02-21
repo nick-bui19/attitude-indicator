@@ -1,9 +1,32 @@
+import { createRenderer } from "./renderer.js";
+
+// --- DOM elements ---
 const alphaEl = document.getElementById("alpha");
 const betaEl = document.getElementById("beta");
 const gammaEl = document.getElementById("gamma");
 const permEl = document.getElementById("perm");
 const btn = document.getElementById("enable");
+const canvas = document.getElementById("horizon");
 
+// --- Renderer setup ---
+const renderer = createRenderer(canvas);
+renderer.resize();
+
+const wrap = document.querySelector(".canvas-wrap");
+const resizeObs = new ResizeObserver(() => renderer.resize());
+resizeObs.observe(wrap);
+
+// --- Hardcoded test values (will be replaced by sensor data) ---
+const TEST_ROLL = 20;
+const TEST_PITCH = 10;
+
+function loop() {
+  renderer.draw(TEST_ROLL, TEST_PITCH);
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+// --- Sensor permission + readout ---
 function onOrientation(event) {
   // alpha: 0..360 (yaw, compass direction)
   // beta:  -180..180 (front-back tilt)
@@ -35,7 +58,9 @@ async function enableSensors() {
   } catch (err) {
     permEl.textContent = "error";
     console.error(err);
-    alert("Failed to enable sensors. Open in Safari/Chrome on your phone and try again.");
+    alert(
+      "Failed to enable sensors. Open in Safari/Chrome on your phone and try again.",
+    );
   }
 }
 
