@@ -19,6 +19,18 @@ button {
   cursor: pointer;
 }
 
+.canvas-wrap {
+  max-width: 400px;
+  margin: 16px auto 0;
+  aspect-ratio: 1;
+}
+
+#horizon {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 .card {
   margin-top: 16px;
   padding: 16px;
