@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { degToRad, overdrawRadius, pitchToPixels, PITCH_PX_PER_DEG } from "./renderer.js";
+import { degToRad, overdrawRadius, pitchToPixels, PITCH_PX_PER_DEG, clamp } from "./renderer.js";
 
 describe("degToRad", () => {
   it("converts 0 degrees to 0 radians", () => {
@@ -32,5 +32,27 @@ describe("pitchToPixels", () => {
 describe("overdrawRadius", () => {
   it("returns the diagonal for a square canvas", () => {
     expect(overdrawRadius(300, 300)).toBeCloseTo(Math.hypot(300, 300));
+  });
+});
+
+describe("clamp", () => {
+  it("returns value unchanged when within range", () => {
+    expect(clamp(10, 0, 20)).toBe(10);
+  });
+
+  it("returns min when value equals min", () => {
+    expect(clamp(-45, -45, 45)).toBe(-45);
+  });
+
+  it("returns max when value equals max", () => {
+    expect(clamp(45, -45, 45)).toBe(45);
+  });
+
+  it("clamps to min when value is below min", () => {
+    expect(clamp(-90, -45, 45)).toBe(-45);
+  });
+
+  it("clamps to max when value is above max", () => {
+    expect(clamp(80, -45, 45)).toBe(45);
   });
 });
