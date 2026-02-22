@@ -1,9 +1,16 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-family: "SF Mono", "Fira Code", Consolas, monospace;
   margin: 0;
   padding: 24px;
-  background: #0b0f14;
-  color: #e8eef6;
+  background: #080c10;
+  color: #c8d0dc;
+  -webkit-font-smoothing: antialiased;
 }
 
 main {
@@ -11,18 +18,51 @@ main {
   margin: 0 auto;
 }
 
+h1 {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.4);
+  text-align: center;
+  margin: 0 0 20px;
+}
+
 button {
+  display: block;
+  width: 100%;
   padding: 12px 14px;
-  border: 0;
-  border-radius: 10px;
-  font-weight: 600;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.06);
+  color: #a0b0c8;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+button:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+}
+
+button:active {
+  background: rgba(255,255,255,0.04);
 }
 
 .canvas-wrap {
   max-width: 400px;
-  margin: 16px auto 0;
+  margin: 20px auto;
   aspect-ratio: 1;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,0.04),
+    0 4px 24px rgba(0,0,0,0.6),
+    0 0 60px rgba(0,0,0,0.4);
 }
 
 #horizon {
@@ -33,13 +73,22 @@ button {
 
 .card {
   margin-top: 16px;
-  padding: 16px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.06);
-  line-height: 1.8;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.75rem;
+  line-height: 1.9;
+  color: rgba(255,255,255,0.45);
+}
+
+.card span {
+  color: rgba(255,255,255,0.7);
 }
 
 .hint {
-  opacity: 0.8;
-  margin-top: 12px;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.25);
+  text-align: center;
+  margin-top: 16px;
 }
