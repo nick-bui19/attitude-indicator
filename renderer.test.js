@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { degToRad, overdrawRadius, pitchToPixels, PITCH_PX_PER_DEG, clamp } from "./renderer.js";
+import { degToRad, overdrawRadius, pitchToPixels, PITCH_PX_PER_DEG, clamp, lowPass } from "./renderer.js";
 
 describe("degToRad", () => {
   it("converts 0 degrees to 0 radians", () => {
@@ -54,5 +54,28 @@ describe("clamp", () => {
 
   it("clamps to max when value is above max", () => {
     expect(clamp(80, -45, 45)).toBe(45);
+  });
+});
+
+describe("lowPass", () => {
+  it("moves smoothed value toward raw target", () => {
+    expect(lowPass(0, 100, 0.1)).toBe(10);
+  });
+
+  it("returns smoothed unchanged when alpha is 0", () => {
+    expect(lowPass(50, 100, 0)).toBe(50);
+  });
+
+  it("snaps to raw when alpha is 1", () => {
+    expect(lowPass(50, 100, 1)).toBe(100);
+  });
+
+  it("converges toward target with repeated application", () => {
+    let smoothed = 0;
+    const target = 100;
+    for (let i = 0; i < 100; i++) {
+      smoothed = lowPass(smoothed, target, 0.1);
+    }
+    expect(smoothed).toBeCloseTo(100, 1);
   });
 });

@@ -1,4 +1,4 @@
-import { createRenderer, clamp } from "./renderer.js";
+import { createRenderer, clamp, lowPass } from "./renderer.js";
 
 // --- DOM elements ---
 const alphaEl = document.getElementById("alpha");
@@ -20,8 +20,15 @@ resizeObs.observe(wrap);
 let roll = 0;
 let pitch = 0;
 
+// --- Smoothed state (low-pass filtered, used for rendering) ---
+let smoothedRoll = 0;
+let smoothedPitch = 0;
+const SMOOTH_ALPHA = 0.1;
+
 function loop() {
-  renderer.draw(roll, pitch);
+  smoothedRoll = lowPass(smoothedRoll, roll, SMOOTH_ALPHA);
+  smoothedPitch = lowPass(smoothedPitch, pitch, SMOOTH_ALPHA);
+  renderer.draw(smoothedRoll, smoothedPitch);
   requestAnimationFrame(loop);
 }
 requestAnimationFrame(loop);
